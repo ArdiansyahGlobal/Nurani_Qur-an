@@ -1,6 +1,6 @@
 # nurani_quran
 
-A new Flutter project.
+Nurani Qur'an adalah aplikasi berbasis android.
 
 ## Getting Started
 
