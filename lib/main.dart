@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Baca Al-Quran',
+      title: 'Nurani Al-Quran',
       theme: ThemeData(
         primarySwatch: Colors.green,
         fontFamily: 'Amiri', // Font Arabic
@@ -55,11 +55,11 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'اهلا وسهلا في تطبيق القرآن الكريtes',
+                    'Selamat datang di Nurani Al-Quran',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.green,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -83,7 +83,7 @@ class HomePage extends StatelessWidget {
                       );
                     },
                     child: const Text(
-                      'دخول إلى السور',
+                      'Masuk ke 114 Surat',
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
@@ -107,7 +107,7 @@ class HomePage extends StatelessWidget {
                       );
                     },
                     child: const Text(
-                      'دخول إلى سورة ياسين',
+                      'Surat Yasin',
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
