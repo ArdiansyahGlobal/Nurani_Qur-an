@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/arabic_pattern.png'),
+                image: AssetImage('assets/images/app_icon.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                      color: Colors.black87,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white.withOpacity(0.9),
-                      foregroundColor: Colors.green.shade800,
+                      foregroundColor: Colors.black87,
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 30),
                       shape: RoundedRectangleBorder(
@@ -91,7 +91,7 @@ class HomePage extends StatelessWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white.withOpacity(0.9),
-                      foregroundColor: Colors.green.shade800,
+                      foregroundColor: Colors.black87,
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 30),
                       shape: RoundedRectangleBorder(
@@ -111,11 +111,128 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white.withOpacity(0.9),
+                      foregroundColor: Colors.black87,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 30),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PrayerTimesPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Waktu Salat',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class PrayerTimesPage extends StatefulWidget {
+  const PrayerTimesPage({super.key});
+
+  @override
+  _PrayerTimesPageState createState() => _PrayerTimesPageState();
+}
+
+class _PrayerTimesPageState extends State<PrayerTimesPage> {
+  bool isLoading = true;
+  Map<String, dynamic> prayerTimes = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPrayerTimes();
+  }
+
+  Future<void> _fetchPrayerTimes() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://api.aladhan.com/v1/timingsByCity?city=Jakarta&country=Indonesia&method=2'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          prayerTimes = data['data']['timings'];
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        throw Exception('Failed to load prayer times');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error fetching prayer times: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Waktu Salat'),
+        centerTitle: true,
+        backgroundColor: Colors.green.shade700,
+      ),
+      body: Stack(
+        children: [
+          // Background dengan pola Arabic, seperti di halaman lainnya
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/app_icon.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Konten utama
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : ListView(
+            padding: const EdgeInsets.all(16.0),
+            children: [
+              _buildPrayerTimeCard('Subuh', prayerTimes['Fajr']),
+              _buildPrayerTimeCard('Dzuhur', prayerTimes['Dhuhr']),
+              _buildPrayerTimeCard('Ashar', prayerTimes['Asr']),
+              _buildPrayerTimeCard('Maghrib', prayerTimes['Maghrib']),
+              _buildPrayerTimeCard('Isya', prayerTimes['Isha']),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPrayerTimeCard(String name, String? time) {
+    return Card(
+      child: ListTile(
+        title: Text(
+          '$name: ${time ?? 'Data tidak tersedia'}',
+          style: const TextStyle(fontSize: 18),
+        ),
       ),
     );
   }
@@ -176,7 +293,7 @@ class _SuratYasinPageState extends State<SuratYasinPage> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/arabic_pattern.png'),
+                image: AssetImage('assets/images/app_icon.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -248,22 +365,22 @@ class SurahListPage extends StatelessWidget {
       'Al-Mutaffifin', 'Al-Inshiqaq', 'Al-Buruj', 'At-Tariq', 'Al-Alaq', 'Al-Qadr', 'Al-Bayyina',
       'Az-Zalzalah', 'Al-Adiyat', 'Ash-Shams', 'Al-Lail', 'Ad-Duhaa', 'Ash-Sharh', 'At-Tin', 'Al-Alaq',
       'Al-Qadr', 'Al-Bayyina', 'Az-Zalzalah', 'Al-Adiyat', 'Al-Qari\'ah', 'At-Takathur', 'Al-Asr',
-      'Al-Humazah', 'Al-Fil', 'Quraish', 'Al-Ma’un', 'Al-Kawthar', 'Al-Kafirun', 'An-Nasr', 'Al-Masad',
-      'Al-Ikhlas', 'Al-Falaq', 'An-Nas'
+      'Al-Humazah', 'Al-Fil', 'Quraish', 'Al-Ma\'un', 'Al-Kawthar', 'Al-Kafirun', 'An-Nasr', 'Al-Masad',
+      'Al-Ikhlas', 'Al-Falaq', 'An-Nas',
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('قائمة السور'),
-        centerTitle: true,
+        title: const Text('Daftar Surat'),
         backgroundColor: Colors.green.shade700,
       ),
       body: Stack(
         children: [
+          // Background
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/arabic_pattern.png'),
+                image: AssetImage('assets/images/app_icon.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -272,104 +389,10 @@ class SurahListPage extends StatelessWidget {
             itemCount: surahNames.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(
-                  '${index + 1}. ${surahNames[index]}',
-                  style: const TextStyle(fontFamily: 'Amiri'),
-                ),
+                title: Text(surahNames[index]),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SurahDetailPage(surahId: index + 1),
-                    ),
-                  );
+                  // Navigasi ke halaman lain sesuai surah yang dipilih
                 },
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SurahDetailPage extends StatefulWidget {
-  final int surahId;
-
-  const SurahDetailPage({super.key, required this.surahId});
-
-  @override
-  _SurahDetailPageState createState() => _SurahDetailPageState();
-}
-
-class _SurahDetailPageState extends State<SurahDetailPage> {
-  bool isLoading = true;
-  Map<String, dynamic> surahData = {};
-
-  final String apiKey = 'd3cad798d1mshf5935dd76e2df2dp1ee4dejsnc13230b82812';
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchSurahData();
-  }
-
-  Future<void> _fetchSurahData() async {
-    final response = await http.get(
-      Uri.parse('https://api.alquran.cloud/v1/surah/${widget.surahId}'),
-      headers: {
-        'X-RapidAPI-Key': apiKey,
-        'X-RapidAPI-Host': 'api.alquran.cloud',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      setState(() {
-        surahData = data['data'];
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-      throw Exception('Failed to load Surah');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('سورة ${widget.surahId}'),
-        centerTitle: true,
-        backgroundColor: Colors.green.shade700,
-      ),
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/arabic_pattern.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 16.0), // Tambahkan jarak atas dan bawah
-            itemCount: surahData['ayahs']?.length ?? 0,
-            itemBuilder: (context, index) {
-              final ayat = surahData['ayahs'][index];
-              return Card(
-                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ListTile(
-                  title: Text(
-                    ayat['text'] ?? '',
-                    style: const TextStyle(fontFamily: 'Amiri'),
-                  ),
-                ),
               );
             },
           ),
