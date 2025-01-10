@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Selamat datang di Nurani Al-Quran',
+                    'Selamat datang di \n Nurani Al-Quran',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 40),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.9),
+                      backgroundColor: Colors.green.withOpacity(0.9),
                       foregroundColor: Colors.black87,
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 30),
@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.9),
+                      backgroundColor: Colors.green.withOpacity(0.9),
                       foregroundColor: Colors.black87,
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 30),
@@ -114,7 +114,7 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.9),
+                      backgroundColor: Colors.green.withOpacity(0.9),
                       foregroundColor: Colors.black87,
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 30),
@@ -352,7 +352,7 @@ class SurahListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Daftar Surah dengan nama lengkap
     final List<String> surahNames = [
-      'Al-Fatiha', 'Al-Baqarah', 'Aal-E-Imran', 'An-Nisa', 'Al-Ma\'idah', 'Al-An\'am', 'Al-A\'raf',
+      'Al-Fatihah', 'Al-Baqarah', 'Al-Imran', 'An-Nisa', 'Al-Ma\'idah', 'Al-An\'am', 'Al-A\'raf',
       'Al-Anfal', 'At-Tawbah', 'Yunus', 'Hud', 'Yusuf', 'Ar-Ra\'d', 'Ibrahim', 'Al-Hijr', 'An-Nahl',
       'Al-Isra', 'Al-Kahf', 'Maryam', 'Ta-Ha', 'Al-Anbiya', 'Al-Hajj', 'Al-Mu’minun', 'An-Nur', 'Al-Furqan',
       'Ash-Shu\'ara', 'An-Naml', 'Al-Qasas', 'Al-Ankabut', 'Ar-Rum', 'Luqman', 'As-Sajda', 'Al-Ahzab', 'Saba',
@@ -391,10 +391,107 @@ class SurahListPage extends StatelessWidget {
               return ListTile(
                 title: Text(surahNames[index]),
                 onTap: () {
-                  // Navigasi ke halaman lain sesuai surah yang dipilih
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SurahDetailPage(surahIndex: index + 1),
+                    ),
+                  );
                 },
               );
             },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SurahDetailPage extends StatefulWidget {
+  final int surahIndex;
+  const SurahDetailPage({super.key, required this.surahIndex});
+
+  @override
+  _SurahDetailPageState createState() => _SurahDetailPageState();
+}
+
+class _SurahDetailPageState extends State<SurahDetailPage> {
+  bool isLoading = true;
+  Map<String, dynamic> surahDetails = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchSurahDetails();
+  }
+
+  Future<void> _fetchSurahDetails() async {
+    final response = await http.get(
+      Uri.parse('https://api.alquran.cloud/v1/surah/${widget.surahIndex}'),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      setState(() {
+        surahDetails = data['data'];
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      throw Exception('Failed to load Surah');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Surah ${widget.surahIndex}'),
+        centerTitle: true,
+        backgroundColor: Colors.green.shade700,
+      ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/app_icon.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Expanded(
+                  child: ListView.builder(
+                    itemCount: surahDetails['ayahs']?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final ayat = surahDetails['ayahs'][index];
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            ayat['text'] ?? '',
+                            style: const TextStyle(
+                              fontFamily: 'Amiri',
+                              fontSize: 20,
+                              height: 1.8,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
