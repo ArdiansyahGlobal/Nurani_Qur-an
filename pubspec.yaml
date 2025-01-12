@@ -1,0 +1,162 @@
+name: nurani_quran
+description: "Aplikasi Nurani Al-Qur'an."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.1+8
+
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.2  # Versi terbaru dari package http
+  cupertino_icons: ^1.0.8
+  flutter_bloc: ^8.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.11.0
+
+flutter_icons:
+  android: true
+  ios: false  # Matikan pengaturan untuk iOS
+  image_path: "assets/images/icon.png"
+
+
+flutter:
+  uses-material-design: true
+
+  # Menambahkan assets
+  assets:
+    - assets/images/app_icon.png
+    - assets/data/prayer_times.json
+    - assets/data/surat_yasin.json
+    - assets/data/arabic_verse_uthmani1.json
+    - assets/data/arabic_verse_uthmani2.json
+    - assets/data/arabic_verse_uthmani3.json
+    - assets/data/arabic_verse_uthmani4.json
+    - assets/data/arabic_verse_uthmani5.json
+    - assets/data/arabic_verse_uthmani6.json
+    - assets/data/arabic_verse_uthmani7.json
+    - assets/data/arabic_verse_uthmani8.json
+    - assets/data/arabic_verse_uthmani9.json
+    - assets/data/arabic_verse_uthmani10.json
+    - assets/data/arabic_verse_uthmani11.json
+    - assets/data/arabic_verse_uthmani12.json
+    - assets/data/arabic_verse_uthmani13.json
+    - assets/data/arabic_verse_uthmani14.json
+    - assets/data/arabic_verse_uthmani15.json
+    - assets/data/arabic_verse_uthmani16.json
+    - assets/data/arabic_verse_uthmani17.json
+    - assets/data/arabic_verse_uthmani18.json
+    - assets/data/arabic_verse_uthmani19.json
+    - assets/data/arabic_verse_uthmani20.json
+    - assets/data/arabic_verse_uthmani21.json
+    - assets/data/arabic_verse_uthmani22.json
+    - assets/data/arabic_verse_uthmani23.json
+    - assets/data/arabic_verse_uthmani24.json
+    - assets/data/arabic_verse_uthmani25.json
+    - assets/data/arabic_verse_uthmani26.json
+    - assets/data/arabic_verse_uthmani27.json
+    - assets/data/arabic_verse_uthmani28.json
+    - assets/data/arabic_verse_uthmani29.json
+    - assets/data/arabic_verse_uthmani30.json
+    - assets/data/arabic_verse_uthmani31.json
+    - assets/data/arabic_verse_uthmani32.json
+    - assets/data/arabic_verse_uthmani33.json
+    - assets/data/arabic_verse_uthmani34.json
+    - assets/data/arabic_verse_uthmani35.json
+    - assets/data/arabic_verse_uthmani36.json
+    - assets/data/arabic_verse_uthmani37.json
+    - assets/data/arabic_verse_uthmani38.json
+    - assets/data/arabic_verse_uthmani39.json
+    - assets/data/arabic_verse_uthmani40.json
+    - assets/data/arabic_verse_uthmani41.json
+    - assets/data/arabic_verse_uthmani42.json
+    - assets/data/arabic_verse_uthmani43.json
+    - assets/data/arabic_verse_uthmani44.json
+    - assets/data/arabic_verse_uthmani45.json
+    - assets/data/arabic_verse_uthmani46.json
+    - assets/data/arabic_verse_uthmani47.json
+    - assets/data/arabic_verse_uthmani48.json
+    - assets/data/arabic_verse_uthmani49.json
+    - assets/data/arabic_verse_uthmani50.json
+    - assets/data/arabic_verse_uthmani51.json
+    - assets/data/arabic_verse_uthmani52.json
+    - assets/data/arabic_verse_uthmani53.json
+    - assets/data/arabic_verse_uthmani54.json
+    - assets/data/arabic_verse_uthmani55.json
+    - assets/data/arabic_verse_uthmani56.json
+    - assets/data/arabic_verse_uthmani57.json
+    - assets/data/arabic_verse_uthmani58.json
+    - assets/data/arabic_verse_uthmani59.json
+    - assets/data/arabic_verse_uthmani60.json
+    - assets/data/arabic_verse_uthmani61.json
+    - assets/data/arabic_verse_uthmani62.json
+    - assets/data/arabic_verse_uthmani63.json
+    - assets/data/arabic_verse_uthmani64.json
+    - assets/data/arabic_verse_uthmani65.json
+    - assets/data/arabic_verse_uthmani66.json
+    - assets/data/arabic_verse_uthmani67.json
+    - assets/data/arabic_verse_uthmani68.json
+    - assets/data/arabic_verse_uthmani69.json
+    - assets/data/arabic_verse_uthmani70.json
+    - assets/data/arabic_verse_uthmani71.json
+    - assets/data/arabic_verse_uthmani72.json
+    - assets/data/arabic_verse_uthmani73.json
+    - assets/data/arabic_verse_uthmani74.json
+    - assets/data/arabic_verse_uthmani75.json
+    - assets/data/arabic_verse_uthmani76.json
+    - assets/data/arabic_verse_uthmani77.json
+    - assets/data/arabic_verse_uthmani78.json
+    - assets/data/arabic_verse_uthmani79.json
+    - assets/data/arabic_verse_uthmani80.json
+    - assets/data/arabic_verse_uthmani81.json
+    - assets/data/arabic_verse_uthmani82.json
+    - assets/data/arabic_verse_uthmani83.json
+    - assets/data/arabic_verse_uthmani84.json
+    - assets/data/arabic_verse_uthmani85.json
+    - assets/data/arabic_verse_uthmani86.json
+    - assets/data/arabic_verse_uthmani87.json
+    - assets/data/arabic_verse_uthmani88.json
+    - assets/data/arabic_verse_uthmani89.json
+    - assets/data/arabic_verse_uthmani90.json
+    - assets/data/arabic_verse_uthmani91.json
+    - assets/data/arabic_verse_uthmani92.json
+    - assets/data/arabic_verse_uthmani93.json
+    - assets/data/arabic_verse_uthmani94.json
+    - assets/data/arabic_verse_uthmani95.json
+    - assets/data/arabic_verse_uthmani96.json
+    - assets/data/arabic_verse_uthmani97.json
+    - assets/data/arabic_verse_uthmani98.json
+    - assets/data/arabic_verse_uthmani99.json
+    - assets/data/arabic_verse_uthmani100.json
+    - assets/data/arabic_verse_uthmani101.json
+    - assets/data/arabic_verse_uthmani102.json
+    - assets/data/arabic_verse_uthmani103.json
+    - assets/data/arabic_verse_uthmani104.json
+    - assets/data/arabic_verse_uthmani105.json
+    - assets/data/arabic_verse_uthmani106.json
+    - assets/data/arabic_verse_uthmani107.json
+    - assets/data/arabic_verse_uthmani108.json
+    - assets/data/arabic_verse_uthmani109.json
+    - assets/data/arabic_verse_uthmani110.json
+    - assets/data/arabic_verse_uthmani111.json
+    - assets/data/arabic_verse_uthmani112.json
+    - assets/data/arabic_verse_uthmani113.json
+    - assets/data/arabic_verse_uthmani114.json
+
+
+
+  # Menambahkan custom fonts
+  fonts:
+    - family: Amiri
+      fonts:
+        - asset: assets/fonts/Amiri-Bold.ttf
+
+
