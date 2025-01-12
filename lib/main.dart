@@ -610,4 +610,4 @@ class Surah {
     );
   }
 }
-//update baru
+//update baruu
